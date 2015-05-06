@@ -1,2 +1,3 @@
-# laravel-mustache
-A Laravel 5 wrapper for the Mustache PHP Template Engine.
+# Laravel Handlebars
+
+A Laravel 5 wrapper of LightnCandy for using the Handlebars (and Mustache) template engine.
