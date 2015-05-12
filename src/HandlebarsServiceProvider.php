@@ -20,8 +20,6 @@ class HandlebarsServiceProvider extends ServiceProvider {
         $this->registerEngineResolverExtensions();
 
         $this->registerFileExtensions();
-
-        //$this->registerPartialBladeDirective();
     }
 
     /**
@@ -123,21 +121,6 @@ class HandlebarsServiceProvider extends ServiceProvider {
             }
 
             return $env;
-        });
-    }
-
-    /**
-     * Register @partial Blade directive.
-     *
-     * @return void
-     */
-    protected function registerPartialBladeDirective()
-    {
-        $this->app->extend('blade.compiler', function($compiler, $app)
-        {
-            $compiler = $app['handlebars.compiler']->compileRaw($compiler);
-
-            return $compiler;
         });
     }
 

@@ -151,33 +151,6 @@ class HandlebarsCompiler extends Compiler implements CompilerInterface {
     }
 
     /**
-     * Blade @raw directive extension.
-     *
-     * @param  \Illuminate\View\Compilers\CompilerInterface  $compiler
-     * @return \Illuminate\View\Compilers\CompilerInterface
-     */
-    public static function compileRaw(CompilerInterface $compiler) {
-        $compiler->extend(function($view, $compiler) {
-            $pattern = $compiler->createMatcher('raw');
-
-            $callback = function($match) {
-                $expression = $match[2];
-
-                if (starts_with($expression, '('))
-                {
-                    $expression = substr($expression, 1, -1);
-                }
-
-                return "<?php echo \$__env->make($expression, ['raw' => true], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>";
-            };
-
-            return preg_replace_callback($pattern, $callback, $view);
-        });
-
-        return $compiler;
-    }
-
-    /**
      * Get language helper functions.
      *
      * @return array
