@@ -1,7 +1,5 @@
 <?php namespace Wetzel\Handlebars\Compilers;
 
-use Closure;
-use ErrorException;
 use Illuminate\View\Compilers\Compiler;
 use Illuminate\View\Compilers\CompilerInterface;
 use Illuminate\Filesystem\Filesystem;

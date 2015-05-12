@@ -2,7 +2,6 @@
 
 use Illuminate\View\Engines\EngineInterface;
 use Illuminate\View\Engines\CompilerEngine;
-use Wetzel\Handlebars\Compilers\HandlebarsCompiler;
 
 class HandlebarsEngine extends CompilerEngine implements EngineInterface {
 
