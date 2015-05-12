@@ -12,7 +12,7 @@ return [
     |
     */
 
-    'flags' => LightnCandy::FLAG_HANDLEBARSJS,
+    'flags' => LightnCandy::FLAG_HANDLEBARSJS | LightnCandy::FLAG_ERROR_EXCEPTION,
 
     /*
     |--------------------------------------------------------------------------
@@ -84,7 +84,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Raw Output
+    | Language Helpers
+    |--------------------------------------------------------------------------
+    |
+    | Use this option, if you want to use the language helpers in a template.
+    | You can use a {{lang ...}} and {{choice ...}} helper. Both have the same
+    | behaviour like the @lang and @choice Blade directives.
+    |
+    */
+
+    'language_helpers' => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Optional Raw Output
     |--------------------------------------------------------------------------
     |
     | If this option is set to true, you can pass a $raw variable to the data
@@ -98,14 +111,15 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Blade Language Directives
+    | Translate Raw Output
     |--------------------------------------------------------------------------
     |
-    | Use this option, if you want to use the Blade language directives in a
-    | template. You can use the @lang and @choice directive.
+    | If language_helpers and optional_raw_output are set to true, this option
+    | can also set to true. If so, the translation helpers will also be
+    | rendered for the raw output.
     |
     */
 
-    'blade_lang_directives' => true,
+    'translate_raw_output' => true,
 
 ];

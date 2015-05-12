@@ -1,10 +1,11 @@
 <?php namespace Wetzel\Handlebars\Compilers;
 
 use Closure;
-use Wetzel\Handlebars\Compilers\Compiler;
+use ErrorException;
+use Illuminate\View\Compilers\Compiler;
 use Illuminate\View\Compilers\CompilerInterface;
 use Illuminate\Filesystem\Filesystem;
-use LightnCandy;
+use Wetzel\Handlebars\Support\LightnCandy;
 
 class HandlebarsCompiler extends Compiler implements CompilerInterface {
 
@@ -16,10 +17,31 @@ class HandlebarsCompiler extends Compiler implements CompilerInterface {
     protected $lightncandy;
 
     /**
+     * Language helpers option.
+     *
+     * @var bool
+     */
+    protected $languageHelpers = true;
+
+    /**
+     * Optional raw output.
+     *
+     * @var bool
+     */
+    protected $optionalRawOutput = true;
+
+    /**
+     * Translate raw output.
+     *
+     * @var bool
+     */
+    protected $translateRawOutput = true;
+
+    /**
      * Create a new compiler instance.
      *
      * @param  \Illuminate\Filesystem\Filesystem  $files
-     * @param  \LightnCandy  $lightncandy
+     * @param  \Wetzel\Handlebars\Support\LightnCandy  $lightncandy
      * @param  string  $cachePath
      * @return void
      */
@@ -35,76 +57,141 @@ class HandlebarsCompiler extends Compiler implements CompilerInterface {
 
         // set basedir from laravel view config
         $this->options['basedir'] = $app['config']->get('view.paths');
-        if ( ! isset($this->options['blade_lang_directives'])) $this->options['blade_lang_directives'] = false;
 
-        // set language variables helper function
-        if($this->options['blade_lang_directives'])
-        {
-            if ( ! isset($this->options['helpers'])) $this->options['helpers'] = [];
+        // make sure helpers array is set
+        if ( ! isset($this->options['helpers'])) $this->options['helpers'] = [];
 
-            $helpers = [
-                'lang' => function($args, $named) {
-                    // todo: pass $named array
-                    return \Illuminate\Support\Facades\Lang::get($args[0]);
-                },
-                'choice' => function($args, $named) {
-                    // todo: pass $named array
-                    return \Illuminate\Support\Facades\Lang::choice($args[0], $args[1]);
-                }
-            ];
+        // set language helpers option
+        $this->languageHelpers = (isset($this->options['language_helpers']))
+            ? $this->options['language_helpers']
+            : $this->languageHelpers;
 
-            $this->options['helpers'] = array_merge($helpers, $this->options['helpers']);
-        }
+        // set translate raw output option
+        $this->translateRawOutput = (isset($this->options['translate_raw_output']))
+            ? $this->options['translate_raw_output']
+            : $this->translateRawOutput;
+
+        // set translate raw output option
+        $this->optionalRawOutput = (isset($this->options['optional_raw_output']))
+            ? $this->options['optional_raw_output']
+            : $this->optionalRawOutput;
     }
 
     /**
      * Compile the view at the given path.
      *
      * @param  string  $path
-     * @param  bool  $rendered
      * @return void
      */
-    public function compile($path, $render = true)
+    public function compile($path)
     {
-        $contents = $this->files->get($path);
-
-        // prepare language variables
-        if($this->options['blade_lang_directives']) {
-            $contents = $this->compileString($contents);
+        // compile with Handlebars compiler (raw output)
+        if ($this->optionalRawOutput) {
+            $this->compileString($path, true);
         }
 
         // compile with Handlebars compiler
-        $contents = $this->lightncandy->compile($contents, $this->options);
+        $this->compileString($path);
+    }
+
+    /**
+     * Compile the view at the given path.
+     *
+     * @param  string  $path
+     * @param  array  $options
+     * @param  bool  $raw
+     * @return void
+     */
+    public function compileString($path, $raw = false)
+    {
+        $options = $this->options;
+        
+        // set partials directory
+        if ( ! $raw) {
+            $options['basedir'][] = dirname($path);
+        }
+
+        // set raw option
+        array_set($options, 'compile_helpers_only', $raw);
+
+        // set language helper functions
+        if($this->languageHelpers)
+        {
+            if ( ! $raw) {
+                $helpers = array_merge($this->getLanguageHelpers(), $options['helpers']);
+            } elseif ($this->translateRawOutput) {
+                $helpers = $this->getLanguageHelpers();
+            } else {
+                $helpers = [];
+            }
+
+            array_set($options, 'helpers', $helpers);
+        }
+
+        // compile with Handlebars compiler
+        $contents = $this->lightncandy->compile($this->files->get($path), $options);
 
         if ( ! is_null($this->cachePath)) {
-            $this->files->put($this->getCompiledPath($path), $contents);
+            $this->files->put($this->getCompiledPath($path, $raw), $contents);
         }
     }
 
     /**
-     * Compile the lang statements into valid PHP.
+     * Get the path to the compiled version of a view.
      *
-     * @param  string  $expression
+     * @param  string  $path
+     * @param  bool  $raw
      * @return string
      */
-    protected function compileLang($expression)
+    public function getCompiledPath($path, $raw = false)
     {
-        $expression = str_replace("array(","",$expression);
-        $expression = trim($expression, "(),[]");
-        return "{{lang $expression }}";
+        if ($raw) $path .= '-raw';
+
+        return $this->cachePath.'/'.md5($path.'-raw');
     }
 
     /**
-     * Compile the choice statements into valid PHP.
+     * Blade @raw directive extension.
      *
-     * @param  string  $expression
-     * @return string
+     * @param  \Illuminate\View\Compilers\CompilerInterface  $compiler
+     * @return \Illuminate\View\Compilers\CompilerInterface
      */
-    protected function compileChoice($expression)
+    public static function compileRaw(CompilerInterface $compiler) {
+        $compiler->extend(function($view, $compiler) {
+            $pattern = $compiler->createMatcher('raw');
+
+            $callback = function($match) {
+                $expression = $match[2];
+
+                if (starts_with($expression, '('))
+                {
+                    $expression = substr($expression, 1, -1);
+                }
+
+                return "<?php echo \$__env->make($expression, ['raw' => true], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>";
+            };
+
+            return preg_replace_callback($pattern, $callback, $view);
+        });
+
+        return $compiler;
+    }
+
+    /**
+     * Get language helper functions.
+     *
+     * @return array
+     */
+    protected function getLanguageHelpers()
     {
-        $expression = str_replace("array(","",$expression);
-        $expression = trim($expression, "(),[]");
-        return "{{choice $expression }}";
+        return [
+            'lang' => function($args, $named) {
+                return \Illuminate\Support\Facades\Lang::get($args[0], $named);
+            },
+            'choice' => function($args, $named) {
+                return \Illuminate\Support\Facades\Lang::choice($args[0], $args[1], $named);
+            }
+        ];
     }
 
 }

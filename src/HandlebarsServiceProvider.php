@@ -2,9 +2,9 @@
 
 use Illuminate\Support\ServiceProvider;
 use Wetzel\Handlebars\Engines\HandlebarsEngine;
+use Wetzel\Handlebars\Support\LightnCandy;
 use Wetzel\Handlebars\Compilers\HandlebarsCompiler;
-use Wetzel\Handlebars\Compilers\HandlebarsRawCompiler;
-use LightnCandy;
+use Wetzel\Handlebars\Compilers\BladeCompiler;
 
 class HandlebarsServiceProvider extends ServiceProvider {
 
@@ -15,11 +15,27 @@ class HandlebarsServiceProvider extends ServiceProvider {
      */
     public function register()
     {
+        $this->registerConfig();
+
         $this->registerEngineResolverExtensions();
 
         $this->registerFileExtensions();
 
-        $this->registerPartialBladeDirective();
+        //$this->registerPartialBladeDirective();
+    }
+
+    /**
+     * Register the view engine resolver extension.
+     *
+     * @return void
+     */
+    protected function registerConfig()
+    {
+        $configPath = __DIR__ . '/../config/handlebars.php';
+
+        $this->mergeConfigFrom($configPath, 'handlebars');
+
+        $this->publishes([$configPath => config_path('handlebars.php')], 'config');
     }
 
     /**
@@ -31,9 +47,32 @@ class HandlebarsServiceProvider extends ServiceProvider {
     {
         $this->app->extend('view.engine.resolver', function($resolver, $app)
         {
+            $this->registerBladeEngine($resolver);
+
             $this->registerHandlebarsEngine($resolver);
 
             return $resolver;
+        });
+    }
+
+    /**
+     * Register the Blade engine implementation.
+     *
+     * @param  \Illuminate\View\Engines\EngineResolver  $resolver
+     * @return void
+     */
+    public function registerBladeEngine($resolver)
+    {
+        $app = $this->app;
+
+        // The Compiler engine requires an instance of the CompilerInterface, which in
+        // this case will be the Blade compiler, so we'll first create the compiler
+        // instance to pass into the engine so it can compile the views properly.
+        $app->singleton('blade.compiler', function($app)
+        {
+            $cache = $app['config']['view.compiled'];
+
+            return new BladeCompiler($app['files'], $cache);
         });
     }
 
@@ -62,16 +101,9 @@ class HandlebarsServiceProvider extends ServiceProvider {
             return new HandlebarsCompiler($app['files'], $app['handlebars.lightncandy'], $cache);
         });
 
-        $app->singleton('handlebars.rawcompiler', function($app)
-        {
-            $cache = $app['config']['view.compiled'];
-
-            return new HandlebarsRawCompiler($app['files'], $cache);
-        });
-
         $resolver->register('handlebars', function() use ($app)
         {
-            return new HandlebarsEngine($app['handlebars.compiler'], $app['handlebars.rawcompiler']);
+            return new HandlebarsEngine($app['handlebars.compiler']);
         });
     }
 
@@ -101,11 +133,11 @@ class HandlebarsServiceProvider extends ServiceProvider {
      */
     protected function registerPartialBladeDirective()
     {
-        $this->app->extend('blade', function($view, $compiler)
+        $this->app->extend('blade.compiler', function($compiler, $app)
         {
-            $pattern = $compiler->createMatcher('partial');
+            $compiler = $app['handlebars.compiler']->compileRaw($compiler);
 
-            return preg_replace($pattern, '$1<?php echo $2; ?>', $view);
+            return $compiler;
         });
     }
 
