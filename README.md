@@ -45,18 +45,29 @@ By default all views which have a `.hb` or `.handlebars` file extension are auto
 If you wish, you can use the Blade language directives `@lang` and `@choice` in Handlebars templates, too. You have to set `$language_helpers = true` in order to use them. Here is an example:
 
 ```
-Blade syntax:
+// Blade syntax:
 @lang('message', ['firstname' => 'John', 'lastname' => $lastname])
 @choice('comment_count', 2, ['item' => 'Article'])
-
-Handlebars syntax:
+```
+```
+// Handlebars syntax:
 {{lang 'message' firstname='John' lastname=lastname }}
 {{choice 'comment_count' 2 item='Article' }}
 ```
 
 ### Raw Output
 
-If you want to output the raw code of a template (maybe because you want to use the unrendered template clientside), you can set `$optional_raw_output = true` in the configuration. Then you can pass a variable `$raw = true` to the template (i. e. `@include('articles', ['raw' => true])`) or more comfortable you can use the `@raw` Blade directive (i. e. `@raw('articles')`).
+If you want to output the raw code of a template (maybe because you want to use the unrendered template clientside), you can set `$optional_raw_output = true` in the configuration. Then you can pass a variable `$raw = true` to the template or more comfortable you can use the `@raw` Blade directive.
+
+```
+// Passing the $raw variable to the view:
+View::make('articles', ['raw' => true])
+@include('articles', ['raw' => true])
+```
+```
+// Blade @raw directive:
+@raw('articles')
+```
 
 If you want to output a raw template with compiled and rendered language variables, you can set `$translate_raw_output = true`.
 
