@@ -27,6 +27,9 @@ class HandlebarsEngine extends CompilerEngine implements EngineInterface {
         $raw = (isset($data['raw']) && $data['raw']) ? true : false;
         $compiled = $this->compiler->getCompiledPath($path, $raw);
 
+        // convert objects to arrays
+        $data = array_map('self::convertObjectToArray', $data);
+
         // Once we have the path to the compiled file, we will evaluate the paths with
         // typical PHP just like any other templates. We also keep a stack of views
         // which have been rendered for right exception messages to be generated.
@@ -56,6 +59,15 @@ class HandlebarsEngine extends CompilerEngine implements EngineInterface {
         $results = $renderer($__data);
 
         return ltrim($results);
+    }
+
+    protected function convertObjectToArray($item)
+    {
+        if (is_object($item) && method_exists($item, 'toArray')) {
+            $item = $item->toArray();
+        }
+
+        return $item;
     }
 
 }
