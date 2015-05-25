@@ -13,7 +13,7 @@
     "require": {
         "php": ">=5.4.0",
         "illuminate/view": "5.*",
-        "zordius/lightncandy": "dev-master"
+        "zordius/lightncandy": "0.2*"
     },
     "autoload": {
         "psr-4": {
