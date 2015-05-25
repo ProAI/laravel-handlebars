@@ -38,7 +38,7 @@ In addition to the LightnCandy options there are the options `language_helpers`,
 
 You can use Handlebars templates the same way you use Blade templates. You can return them with `View::make('articles', ['name' => 'Taylor'])` or include them with the Blade `@include` directive, i. e. `@include('articles', ['name' => 'Taylor'])`.
 
-By default all views which have a `.hb` or `.handlebars` file extension are automatically detected as Handlebars templates. You can add more file extensions that should be treated as Handlebars templates in the `fileext` array in `config/handlebars.php`.
+By default all views which have a `.hbs` or `.handlebars` file extension are automatically detected as Handlebars templates. You can add more file extensions that should be treated as Handlebars templates in the `fileext` array in `config/handlebars.php`.
 
 ### Language Helpers
 
@@ -73,7 +73,7 @@ If you want to output a raw template with compiled and rendered language variabl
 
 ### Partials
 
-This package automatically adds the directory of the current template to the basedir of LightnCandy. By that it is possible to easily include other Handlebars templates in the same directory. Just write `{{> comment}}` to include `comment.hb` from the same directory.
+This package automatically adds the directory of the current template to the basedir of LightnCandy. By that it is possible to easily include other Handlebars templates in the same directory. Just write `{{> comment}}` to include `comment.hbs` from the same directory.
 
 ### Example Template
 
