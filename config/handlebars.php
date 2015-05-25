@@ -26,7 +26,7 @@ return [
     
     'fileext' => [
         '.handlebars',
-        '.hb',
+        '.hbs',
     ],
 
     /*
