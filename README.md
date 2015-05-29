@@ -93,7 +93,7 @@ For more information about the Handlebars syntax see the [Handlebars documentati
 
 ## Support
 
-Bugs and feature requests are tracked on [GitHub](https://github.com/markusjwetzel/laravel-datamapper/issues).
+Bugs and feature requests are tracked on [GitHub](https://github.com/markusjwetzel/laravel-handlebars/issues).
 
 ## License
 
