@@ -1,5 +1,7 @@
 # Laravel Handlebars
 
+[![Latest Stable Version](https://poser.pugx.org/markusjwetzel/laravel-handlebars/v/stable)](https://packagist.org/packages/markusjwetzel/laravel-handlebars) [![Total Downloads](https://poser.pugx.org/markusjwetzel/laravel-handlebars/downloads)](https://packagist.org/packages/markusjwetzel/laravel-handlebars) [![Latest Unstable Version](https://poser.pugx.org/markusjwetzel/laravel-handlebars/v/unstable)](https://packagist.org/packages/markusjwetzel/laravel-handlebars) [![License](https://poser.pugx.org/markusjwetzel/laravel-handlebars/license)](https://packagist.org/packages/markusjwetzel/laravel-handlebars)
+
 This package allows you to use Handlebars (and Mustache) templates with Laravel. You can integrate Handlebars templates into Blade templates and you can even use the Blade language directives `@lang` and `@choice` in Handlebars templates.
 
 It's the perfect choice, if you want to use the same templates in different languages (i. e. PHP and JavaScript) and/or server- and clientside. The compiling and rendering is veeery fast, because this package wraps the super fast template engine [LightnCandy](https://github.com/zordius/lightncandy).
