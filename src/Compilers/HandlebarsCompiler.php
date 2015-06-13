@@ -116,7 +116,7 @@ class HandlebarsCompiler extends Compiler implements CompilerInterface {
         if($this->languageHelpers)
         {
             if ( ! $raw) {
-                $helpers = array_merge($this->getLanguageHelpers(), $options['helpers']);
+                $helpers = array_merge($this->getHelpers(), $options['helpers']);
             } elseif ($this->translateRawOutput) {
                 $helpers = $this->getLanguageHelpers();
             } else {
@@ -149,6 +149,31 @@ class HandlebarsCompiler extends Compiler implements CompilerInterface {
     }
 
     /**
+     *
+     * Get all helpers included that come included in this package
+     *
+     * @return array
+     */
+    protected function getHelpers()
+    {
+        return array_merge($this->getFormHelpers(), $this->getLanguageHelpers());
+    }
+
+    /**
+     * Get form helper functions.
+     *
+     * @return array
+     */
+    protected function getFormHelpers()
+    {
+        return [
+            'form_token' => function() {
+                return '<input type="hidden" name="_token" value="' . csrf_token() . '" />';
+            }
+        ];
+    }
+
+    /**
      * Get language helper functions.
      *
      * @return array
@@ -164,5 +189,4 @@ class HandlebarsCompiler extends Compiler implements CompilerInterface {
             }
         ];
     }
-
 }
