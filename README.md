@@ -2,7 +2,7 @@
 
 [![Latest Stable Version](https://poser.pugx.org/proai/laravel-handlebars/v/stable)](https://packagist.org/packages/proai/laravel-handlebars) [![Total Downloads](https://poser.pugx.org/proai/laravel-handlebars/downloads)](https://packagist.org/packages/proai/laravel-handlebars) [![Latest Unstable Version](https://poser.pugx.org/proai/laravel-handlebars/v/unstable)](https://packagist.org/packages/proai/laravel-handlebars) [![License](https://poser.pugx.org/proai/laravel-handlebars/license)](https://packagist.org/packages/proai/laravel-handlebars)
 
-*Notice: This package has been moved from `markusjwetzel/laravel-handlebars` to `proai/handlebars`. Make sure to update your `composer.json` and your service providers.*
+*Notice: This package has been moved from `markusjwetzel/laravel-handlebars` to `proai/laravel-handlebars`. Make sure to update your `composer.json` and your service providers.*
 
 This package allows you to use Handlebars (and Mustache) templates with Laravel. You can integrate Handlebars templates into Blade templates and you can even use the Blade language directives `@lang` and `@choice` in Handlebars templates.
 
