@@ -1,6 +1,6 @@
 # Laravel Handlebars
 
-[![Latest Stable Version](https://poser.pugx.org/markusjwetzel/laravel-handlebars/v/stable)](https://packagist.org/packages/markusjwetzel/laravel-handlebars) [![Total Downloads](https://poser.pugx.org/markusjwetzel/laravel-handlebars/downloads)](https://packagist.org/packages/markusjwetzel/laravel-handlebars) [![Latest Unstable Version](https://poser.pugx.org/markusjwetzel/laravel-handlebars/v/unstable)](https://packagist.org/packages/markusjwetzel/laravel-handlebars) [![License](https://poser.pugx.org/markusjwetzel/laravel-handlebars/license)](https://packagist.org/packages/markusjwetzel/laravel-handlebars)
+[![Latest Stable Version](https://poser.pugx.org/proai/laravel-handlebars/v/stable)](https://packagist.org/packages/proai/laravel-handlebars) [![Total Downloads](https://poser.pugx.org/proai/laravel-handlebars/downloads)](https://packagist.org/packages/proai/laravel-handlebars) [![Latest Unstable Version](https://poser.pugx.org/proai/laravel-handlebars/v/unstable)](https://packagist.org/packages/proai/laravel-handlebars) [![License](https://poser.pugx.org/proai/laravel-handlebars/license)](https://packagist.org/packages/proai/laravel-handlebars)
 
 This package allows you to use Handlebars (and Mustache) templates with Laravel. You can integrate Handlebars templates into Blade templates and you can even use the Blade language directives `@lang` and `@choice` in Handlebars templates.
 
@@ -11,19 +11,19 @@ It's the perfect choice, if you want to use the same templates in different lang
 Laravel Handlebars is distributed as a composer package. So you first have to add the package to your `composer.json` file:
 
 ```
-"markusjwetzel/laravel-handlebars": "~1.0@dev"
+"proai/laravel-handlebars": "~1.0@dev"
 ```
 
 Then you have to run `composer update` to install the package. Once this is completed, you have to add the service provider to the providers array in `config/app.php`:
 
 ```
-'Wetzel\Handlebars\HandlebarsServiceProvider'
+'ProAI\Handlebars\HandlebarsServiceProvider'
 ```
 
 You can publish the package configuration with the following command:
 
 ```
-php artisan vendor:publish --provider="Wetzel\Handlebars\HandlebarsServiceProvider"
+php artisan vendor:publish --provider="ProAI\Handlebars\HandlebarsServiceProvider"
 ```
 
 ## Usage
@@ -93,7 +93,7 @@ For more information about the Handlebars syntax see the [Handlebars documentati
 
 ## Support
 
-Bugs and feature requests are tracked on [GitHub](https://github.com/markusjwetzel/laravel-handlebars/issues).
+Bugs and feature requests are tracked on [GitHub](https://github.com/proai/laravel-handlebars/issues).
 
 ## License
 

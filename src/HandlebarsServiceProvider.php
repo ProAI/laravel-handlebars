@@ -1,10 +1,10 @@
-<?php namespace Wetzel\Handlebars;
+<?php namespace ProAI\Handlebars;
 
 use Illuminate\Support\ServiceProvider;
-use Wetzel\Handlebars\Engines\HandlebarsEngine;
-use Wetzel\Handlebars\Support\LightnCandy;
-use Wetzel\Handlebars\Compilers\HandlebarsCompiler;
-use Wetzel\Handlebars\Compilers\BladeCompiler;
+use ProAI\Handlebars\Engines\HandlebarsEngine;
+use ProAI\Handlebars\Support\LightnCandy;
+use ProAI\Handlebars\Compilers\HandlebarsCompiler;
+use ProAI\Handlebars\Compilers\BladeCompiler;
 
 class HandlebarsServiceProvider extends ServiceProvider {
 

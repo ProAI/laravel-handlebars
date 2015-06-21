@@ -1,4 +1,4 @@
-<?php namespace Wetzel\Handlebars\Compilers;
+<?php namespace ProAI\Handlebars\Compilers;
 
 use Illuminate\View\Compilers\BladeCompiler as BaseBladeCompiler;
 use Illuminate\View\Compilers\CompilerInterface;

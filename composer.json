@@ -1,8 +1,8 @@
 {
-    "name": "markusjwetzel/laravel-handlebars",
+    "name": "proai/laravel-handlebars",
     "description": "A Laravel 5 wrapper for LightnCandy for using the Handlebars (and Mustache) template engine.",
     "keywords": ["laravel","lightncandy","handlebars","mustache","template engine"],
-    "homepage": "http://github.com/markusjwetzel/laravel-handlebars",
+    "homepage": "http://github.com/proai/laravel-handlebars",
     "license": "MIT",
     "authors": [
         {
@@ -17,7 +17,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Wetzel\\Handlebars\\": "src/"
+            "ProAI\\Handlebars\\": "src/"
         }
     },
     "extra": {

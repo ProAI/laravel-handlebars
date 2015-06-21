@@ -1,9 +1,9 @@
-<?php namespace Wetzel\Handlebars\Compilers;
+<?php namespace ProAI\Handlebars\Compilers;
 
 use Illuminate\View\Compilers\Compiler;
 use Illuminate\View\Compilers\CompilerInterface;
 use Illuminate\Filesystem\Filesystem;
-use Wetzel\Handlebars\Support\LightnCandy;
+use ProAI\Handlebars\Support\LightnCandy;
 
 class HandlebarsCompiler extends Compiler implements CompilerInterface {
 
@@ -39,7 +39,7 @@ class HandlebarsCompiler extends Compiler implements CompilerInterface {
      * Create a new compiler instance.
      *
      * @param  \Illuminate\Filesystem\Filesystem  $files
-     * @param  \Wetzel\Handlebars\Support\LightnCandy  $lightncandy
+     * @param  \ProAI\Handlebars\Support\LightnCandy  $lightncandy
      * @param  string  $cachePath
      * @return void
      */

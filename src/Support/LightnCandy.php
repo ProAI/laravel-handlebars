@@ -1,4 +1,4 @@
-<?php namespace Wetzel\Handlebars\Support;
+<?php namespace ProAI\Handlebars\Support;
 
 use LightnCandy as BaseLightnCandy;
 

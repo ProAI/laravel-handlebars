@@ -1,4 +1,4 @@
-<?php namespace Wetzel\Handlebars\Engines;
+<?php namespace ProAI\Handlebars\Engines;
 
 use Illuminate\View\Engines\EngineInterface;
 use Illuminate\View\Engines\CompilerEngine;
