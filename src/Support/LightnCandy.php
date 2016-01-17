@@ -1,6 +1,6 @@
 <?php namespace ProAI\Handlebars\Support;
 
-use LightnCandy as BaseLightnCandy;
+use LightnCandy\LightnCandy as BaseLightnCandy;
 
 class LightnCandy extends BaseLightnCandy {
 

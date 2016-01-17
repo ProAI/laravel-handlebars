@@ -1,5 +1,7 @@
 <?php
 
+use ProAI\Handlebars\Support\LightnCandy;
+
 return [
 
     /*
