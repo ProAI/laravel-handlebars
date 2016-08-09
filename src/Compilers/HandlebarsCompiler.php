@@ -126,7 +126,7 @@ class HandlebarsCompiler extends Compiler implements CompilerInterface {
             array_set($options, 'helpers', $helpers);
         }
 
-        // set partialresolver option
+        // As of LightnCandy v0.91 resolving via `basedir` and `fileext` options has been stripped from LightnCandy.
         if (!$options['partialresolver']) {
             $options['partialresolver'] = function ($context, $name) use ($options) {
                 foreach ($options['basedir'] as $dir) {
@@ -144,6 +144,7 @@ class HandlebarsCompiler extends Compiler implements CompilerInterface {
         $contents = $this->lightncandy->compile($this->files->get($path), $options);
 
         if ( ! is_null($this->cachePath)) {
+            // As of LightnCandy v0.90 generated PHP code will not includes `<?php`.
             $this->files->put($this->getCompiledPath($path, $raw), "<?php $contents");
         }
     }
