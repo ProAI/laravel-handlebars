@@ -2,7 +2,8 @@
 
 use LightnCandy\LightnCandy as BaseLightnCandy;
 
-class LightnCandy extends BaseLightnCandy {
+class LightnCandy extends BaseLightnCandy
+{
 
     protected static $compileHelpersOnly;
 
@@ -14,7 +15,8 @@ class LightnCandy extends BaseLightnCandy {
      *
      * @return string|false Compiled PHP code when successed. If error happened and compile failed, return false.
      */
-    public static function compile($template, $options = array('flags' => self::FLAG_BESTPERFORMANCE)) {
+    public static function compile($template, $options = array('flags' => self::FLAG_BESTPERFORMANCE))
+    {
         self::$compileHelpersOnly = (isset($options['compile_helpers_only']) && $options['compile_helpers_only'] == true);
 
         return parent::compile($template, $options);
@@ -27,17 +29,18 @@ class LightnCandy extends BaseLightnCandy {
      * @param string $left left string of a token
      * @param string $right right string of a token
      */
-    protected static function setupToken(&$context, $left = '{{', $right = '}}') {
+    protected static function setupToken(&$context, $left = '{{', $right = '}}')
+    {
         parent::setupToken($context, $left, $right);
 
         if (self::$compileHelpersOnly) {
             $helperTokens = array();
-            foreach($context['helpers'] as $helper => $value) {
-                $helperTokens[] = $helper.'.*?';
+            foreach ($context['helpers'] as $helper => $value) {
+                $helperTokens[] = $helper . '.*?';
             }
             $helperTokens = implode('|', $helperTokens);
 
-            $context['tokens']['search'] = "/^(.*?)(\\s*)($left)(~?)([\\^#\\/!&>]?)(".$helperTokens.")(~?)($right)(\\s*)(.*)\$/s";
+            $context['tokens']['search'] = "/^(.*?)(\\s*)($left)(~?)([\\^#\\/!&>]?)(" . $helperTokens . ")(~?)($right)(\\s*)(.*)\$/s";
         }
     }
 

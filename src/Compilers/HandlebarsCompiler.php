@@ -1,11 +1,13 @@
 <?php namespace ProAI\Handlebars\Compilers;
 
+use Illuminate\Support\Facades\Lang;
 use Illuminate\View\Compilers\Compiler;
 use Illuminate\View\Compilers\CompilerInterface;
 use Illuminate\Filesystem\Filesystem;
 use ProAI\Handlebars\Support\LightnCandy;
 
-class HandlebarsCompiler extends Compiler implements CompilerInterface {
+class HandlebarsCompiler extends Compiler implements CompilerInterface
+{
 
     /**
      * LightnCandy instance.
@@ -38,10 +40,9 @@ class HandlebarsCompiler extends Compiler implements CompilerInterface {
     /**
      * Create a new compiler instance.
      *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
-     * @param  \ProAI\Handlebars\Support\LightnCandy  $lightncandy
-     * @param  string  $cachePath
-     * @return void
+     * @param  \Illuminate\Filesystem\Filesystem     $files
+     * @param  \ProAI\Handlebars\Support\LightnCandy $lightncandy
+     * @param  string                                $cachePath
      */
     public function __construct(Filesystem $files, LightnCandy $lightncandy, $cachePath)
     {
@@ -57,7 +58,9 @@ class HandlebarsCompiler extends Compiler implements CompilerInterface {
         $this->options['basedir'] = $app['config']->get('view.paths');
 
         // make sure helpers array is set
-        if ( ! isset($this->options['helpers'])) $this->options['helpers'] = [];
+        if (!isset($this->options['helpers'])) {
+            $this->options['helpers'] = [];
+        }
 
         // set language helpers option
         $this->languageHelpers = (isset($this->options['language_helpers']))
@@ -78,7 +81,7 @@ class HandlebarsCompiler extends Compiler implements CompilerInterface {
     /**
      * Compile the view at the given path.
      *
-     * @param  string  $path
+     * @param  string $path
      * @return void
      */
     public function compile($path)
@@ -95,17 +98,15 @@ class HandlebarsCompiler extends Compiler implements CompilerInterface {
     /**
      * Compile the view at the given path.
      *
-     * @param  string  $path
-     * @param  array  $options
-     * @param  bool  $raw
-     * @return void
+     * @param  string $path
+     * @param  bool   $raw
      */
     public function compileString($path, $raw = false)
     {
         $options = $this->options;
-        
+
         // set partials directory
-        if ( ! $raw) {
+        if (!$raw) {
             $options['basedir'][] = dirname($path);
         }
 
@@ -113,9 +114,8 @@ class HandlebarsCompiler extends Compiler implements CompilerInterface {
         array_set($options, 'compile_helpers_only', $raw);
 
         // set language helper functions
-        if($this->languageHelpers)
-        {
-            if ( ! $raw) {
+        if ($this->languageHelpers) {
+            if (!$raw) {
                 $helpers = array_merge($this->getLanguageHelpers(), $options['helpers']);
             } elseif ($this->translateRawOutput) {
                 $helpers = $this->getLanguageHelpers();
@@ -126,26 +126,43 @@ class HandlebarsCompiler extends Compiler implements CompilerInterface {
             array_set($options, 'helpers', $helpers);
         }
 
-        // compile with Handlebars compiler
+        // As of LightnCandy v0.91 resolving via `basedir` and `fileext` options has been stripped from LightnCandy.
+        if (!$options['partialresolver']) {
+            $options['partialresolver'] = function ($context, $name) use ($options) {
+                foreach ($options['basedir'] as $dir) {
+                    foreach ($options['fileext'] as $ext) {
+                        $path = sprintf('%s/%s.%s', rtrim($dir, DIRECTORY_SEPARATOR), $name, ltrim($ext, '.'));
+                        if (file_exists($path)) {
+                            return file_get_contents($path);
+                        }
+                    }
+                }
+                return "[Partial $path not found]";
+            };
+        }
+
         $contents = $this->lightncandy->compile($this->files->get($path), $options);
 
-        if ( ! is_null($this->cachePath)) {
-            $this->files->put($this->getCompiledPath($path, $raw), $contents);
+        if (!is_null($this->cachePath)) {
+            // As of LightnCandy v0.90 generated PHP code will not includes `<?php`.
+            $this->files->put($this->getCompiledPath($path, $raw), "<?php $contents");
         }
     }
 
     /**
      * Get the path to the compiled version of a view.
      *
-     * @param  string  $path
-     * @param  bool  $raw
+     * @param  string $path
+     * @param  bool   $raw
      * @return string
      */
     public function getCompiledPath($path, $raw = false)
     {
-        if ($raw) $path .= '-raw';
+        if ($raw) {
+            $path .= '-raw';
+        }
 
-        return $this->cachePath.'/'.md5($path.'-raw');
+        return $this->cachePath . '/' . md5($path . '-raw');
     }
 
     /**
@@ -156,11 +173,11 @@ class HandlebarsCompiler extends Compiler implements CompilerInterface {
     protected function getLanguageHelpers()
     {
         return [
-            'lang' => function($args, $named) {
-                return \Illuminate\Support\Facades\Lang::get($args[0], $named);
+            'lang' => function ($args, $named) {
+                return Lang::get($args[0], $named);
             },
-            'choice' => function($args, $named) {
-                return \Illuminate\Support\Facades\Lang::choice($args[0], $args[1], $named);
+            'choice' => function ($args, $named) {
+                return Lang::choice($args[0], $args[1], $named);
             }
         ];
     }

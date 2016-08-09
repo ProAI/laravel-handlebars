@@ -1,0 +1,51 @@
+{{! Basics }}
+<h1>{{title}}</h1>
+<div class="body">
+    {{{body}}}
+    <p>by {{author.firstName}} {{author.lastName}}</p>
+</div>
+
+{{! Built-In Helpers }}
+<div class="entry">
+    {{#if author}}
+        <h1>{{author.firstName}} {{author.lastName}}</h1>
+    {{/if}}
+</div>
+
+<div class="entry">
+    {{#if ghost}}
+        <h1>{{ghost.firstName}} {{ghost.lastName}}</h1>
+    {{else}}
+        <h1>Unknown</h1>
+    {{/if}}
+</div>
+
+{{#unless license}}
+    <h3 class="warning">WARNING: This entry does not have a license!</h3>
+{{/unless}}
+
+<ul class="people_list">
+    {{#each people}}
+        <li>{{this}}</li>
+    {{/each}}
+</ul>
+
+{{! Partials }}
+<div class="post">
+    {{> userMessage tagName="h1" }}
+
+    <h1>Comments</h1>
+
+    {{#each comments}}
+        {{> userMessage tagName="h2" }}
+    {{/each}}
+</div>
+
+{{! Partial Blocks }}
+{{#> partialBlock label="<input> Element" name="input"}}
+    <input id="input" type="text" value="Test">
+{{/partialBlock}}
+
+{{#> partialBlock label="<textarea> Element" name="textarea"}}
+    <textarea id="textarea">Test</textarea>
+{{/partialBlock}}

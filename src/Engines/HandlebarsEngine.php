@@ -3,13 +3,14 @@
 use Illuminate\View\Engines\EngineInterface;
 use Illuminate\View\Engines\CompilerEngine;
 
-class HandlebarsEngine extends CompilerEngine implements EngineInterface {
+class HandlebarsEngine extends CompilerEngine implements EngineInterface
+{
 
     /**
      * Get the evaluated contents of the view.
      *
-     * @param  string  $path
-     * @param  array   $data
+     * @param  string $path
+     * @param  array  $data
      * @return string
      */
     public function get($path, array $data = array())
@@ -19,8 +20,7 @@ class HandlebarsEngine extends CompilerEngine implements EngineInterface {
         // If this given view has expired, which means it has simply been edited since
         // it was last compiled, we will re-compile the views so we can evaluate a
         // fresh copy of the view. We'll pass the compiler the path of the view.
-        if ($this->compiler->isExpired($path))
-        {
+        if ($this->compiler->isExpired($path)) {
             $this->compiler->compile($path);
         }
 
@@ -43,8 +43,8 @@ class HandlebarsEngine extends CompilerEngine implements EngineInterface {
     /**
      * Get the evaluated contents of the view at the given path.
      *
-     * @param  string  $__path
-     * @param  array   $__data
+     * @param  string $__path
+     * @param  array  $__data
      * @return string
      */
     protected function evaluatePath($__path, $__data)
