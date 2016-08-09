@@ -130,7 +130,7 @@ class HandlebarsCompiler extends Compiler implements CompilerInterface {
         $contents = $this->lightncandy->compile($this->files->get($path), $options);
 
         if ( ! is_null($this->cachePath)) {
-            $this->files->put($this->getCompiledPath($path, $raw), $contents);
+            $this->files->put($this->getCompiledPath($path, $raw), "<?php $contents");
         }
     }
 
