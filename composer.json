@@ -15,6 +15,9 @@
         "illuminate/view": "5.*",
         "zordius/lightncandy": "0.94"
     },
+    "require-dev": {
+        "orchestra/testbench": "~3.2"
+    },
     "autoload": {
         "psr-4": {
             "ProAI\\Handlebars\\": "src/"
