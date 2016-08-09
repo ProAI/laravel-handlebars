@@ -25,7 +25,7 @@ return [
     | template engine.
     |
     */
-    
+
     'fileext' => [
         '.handlebars',
         '.hbs',
@@ -36,53 +36,24 @@ return [
     | Partials
     |--------------------------------------------------------------------------
     |
-    | LightnCandy supports partial when compile time. You can provide partials
-    | by partials option when compile()
+    | https://github.com/zordius/lightncandy#partial-support
     |
     */
 
     'partials' => [],
+    'partialresolver' => false,
 
     /*
     |--------------------------------------------------------------------------
-    | Custom Helpers
+    | Helpers
     |--------------------------------------------------------------------------
     |
-    | Custom helper can help you deal with common template tasks, for example:
-    | provide URL and text then generate a link. To know more about custom
-    | helper, you can read original handlebars.js document here:
-    | http://handlebarsjs.com/expressions.html . 
+    | https://github.com/zordius/lightncandy#custom-helper
     |
     */
 
     'helpers' => [],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Block Custom Helpers
-    |--------------------------------------------------------------------------
-    |
-    | Block custom helper must be used as a section, the section is started
-    | with {{#helper_name ...}} and ended with {{/helper_name}}.
-    |
-    */
-
-    'blockhelpers' => [],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Handlebars.js' Custom Helpers
-    |--------------------------------------------------------------------------
-    |
-    | You can implement helpers more like Handlebars.js way with hbhelpers
-    | option, all matched single custom helper and block custom helper will be
-    | handled. In Handlebars.js, a block custom helper can rendener child block
-    | by executing options.fn; or change context by send new context as first
-    | parameter.
-    |
-    */
-
-    'hbhelpers' => [],
+    'helperresolver' => false,
 
     /*
     |--------------------------------------------------------------------------

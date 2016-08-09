@@ -126,7 +126,21 @@ class HandlebarsCompiler extends Compiler implements CompilerInterface {
             array_set($options, 'helpers', $helpers);
         }
 
-        // compile with Handlebars compiler
+        // set partialresolver option
+        if (!$options['partialresolver']) {
+            $options['partialresolver'] = function ($context, $name) use ($options) {
+                foreach ($options['basedir'] as $dir) {
+                    foreach ($options['fileext'] as $ext) {
+                        $path = sprintf('%s/%s.%s', rtrim($dir, DIRECTORY_SEPARATOR), $name, ltrim($ext, '.'));
+                        if (file_exists($path)) {
+                            return file_get_contents($path);
+                        }
+                    }
+                }
+                return "[Partial $path not found]";
+            };
+        }
+
         $contents = $this->lightncandy->compile($this->files->get($path), $options);
 
         if ( ! is_null($this->cachePath)) {
