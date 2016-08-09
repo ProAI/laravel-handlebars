@@ -21,8 +21,9 @@ return [
     | File Extensions
     |--------------------------------------------------------------------------
     |
-    | All file extensions that should be compiled with the Handlebars
-    | template engine.
+    | All file extensions that should be compiled with the Handlebars template
+    | engine. Unless you specify your own partial resolver the package will
+    | look for files in Laravel's view storage paths.
     |
     */
 
