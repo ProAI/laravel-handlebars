@@ -34,6 +34,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Cache Busting
+    |--------------------------------------------------------------------------
+    |
+    | Using nested Handlebars partials makes is difficult to determine if the
+    | view at a given path is expired. Therefore you can specify environments
+    | where the cached views will be recompiled on each request.
+    |
+    */
+
+    'development_environment' => [
+        'local',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Partials
     |--------------------------------------------------------------------------
     |

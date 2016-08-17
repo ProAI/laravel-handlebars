@@ -1,5 +1,6 @@
 <?php namespace ProAI\Handlebars\Compilers;
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\View\Compilers\Compiler;
 use Illuminate\View\Compilers\CompilerInterface;
@@ -9,40 +10,27 @@ use ProAI\Handlebars\Support\LightnCandy;
 class HandlebarsCompiler extends Compiler implements CompilerInterface
 {
 
-    /**
-     * LightnCandy instance.
-     *
-     * @var \LightnCandy
-     */
+    /** @var LightnCandy */
     protected $lightncandy;
 
-    /**
-     * Language helpers option.
-     *
-     * @var bool
-     */
+    /** @var bool */
+    protected $developmentEnvironment = false;
+
+    /** @var bool */
     protected $languageHelpers = true;
 
-    /**
-     * Optional raw output.
-     *
-     * @var bool
-     */
+    /** @var bool */
     protected $optionalRawOutput = true;
 
-    /**
-     * Translate raw output.
-     *
-     * @var bool
-     */
+    /** @var bool */
     protected $translateRawOutput = true;
 
     /**
      * Create a new compiler instance.
      *
-     * @param  \Illuminate\Filesystem\Filesystem     $files
-     * @param  \ProAI\Handlebars\Support\LightnCandy $lightncandy
-     * @param  string                                $cachePath
+     * @param Filesystem  $files
+     * @param LightnCandy $lightncandy
+     * @param string      $cachePath
      */
     public function __construct(Filesystem $files, LightnCandy $lightncandy, $cachePath)
     {
@@ -61,6 +49,11 @@ class HandlebarsCompiler extends Compiler implements CompilerInterface
         if (!isset($this->options['helpers'])) {
             $this->options['helpers'] = [];
         }
+
+        // set development environment option
+        $this->developmentEnvironment = (isset($this->options['development_environment']))
+            ? App::environment($this->options['development_environment'])
+            : $this->developmentEnvironment;
 
         // set language helpers option
         $this->languageHelpers = (isset($this->options['language_helpers']))
@@ -180,6 +173,21 @@ class HandlebarsCompiler extends Compiler implements CompilerInterface
                 return Lang::choice($args[0], $args[1], $named);
             }
         ];
+    }
+
+    /**
+     * Make sure that developing locally is fun.
+     *
+     * @param string $path
+     * @return bool
+     */
+    public function isExpired($path)
+    {
+        if ($this->developmentEnvironment) {
+            return true;
+        }
+
+        return parent::isExpired($path);
     }
 
 }
