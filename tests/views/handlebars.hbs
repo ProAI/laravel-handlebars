@@ -49,3 +49,15 @@
 {{#> partialBlock label="<textarea> Element" name="textarea"}}
     <textarea id="textarea">Test</textarea>
 {{/partialBlock}}
+
+{{#> outerPartialBlock}}
+    {{#> innerPartialBlock}}
+        One
+    {{/innerPartialBlock}}
+    {{#> innerPartialBlock}}
+        Two
+    {{/innerPartialBlock}}
+    {{#> innerPartialBlock}}
+        Three
+    {{/innerPartialBlock}}
+{{/outerPartialBlock}}
