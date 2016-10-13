@@ -63,7 +63,7 @@ class HandlebarsEngine extends CompilerEngine implements EngineInterface
 
     protected function convertObjectToArray($item)
     {
-        if (is_object($item) && is_callable([$item, 'toArray'])) {
+        if (is_object($item) && method_exists($item, 'toArray') && is_callable([$item, 'toArray'])) {
             $item = $item->toArray();
         }
 
