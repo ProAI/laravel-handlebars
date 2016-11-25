@@ -59,6 +59,8 @@ If you wish, you can use the Blade language directives `@lang` and `@choice` in 
 
 ### Raw Output
 
+_This feature is currently broken. If you want to use it, use v1.1 or below or [help to fix it](https://github.com/ProAI/laravel-handlebars/issues/12)!_
+
 If you want to output the raw code of a template (maybe because you want to use the unrendered template clientside), you can set `$optional_raw_output = true` in the configuration. Then you can pass a variable `$raw = true` to the template or more comfortable you can use the `@raw` Blade directive.
 
 ```
