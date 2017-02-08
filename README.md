@@ -11,7 +11,7 @@ It's the perfect choice, if you want to use the same templates in different lang
 Laravel Handlebars is distributed as a composer package. So you first have to add the package to your `composer.json` file:
 
 ```
-"proai/laravel-handlebars": "~1.3"
+"proai/laravel-handlebars": "~1.4"
 ```
 
 Then you have to run `composer update` to install the package. Once this is completed, you have to add the service provider to the providers array in `config/app.php`:
@@ -92,6 +92,12 @@ This package automatically adds the directory of the current template to the bas
 ```
 
 For more information about the Handlebars syntax see the [Handlebars documentation](http://handlebarsjs.com). It does not matter that the examples are for JavaScript, because Handlebars templates are the same for JavaScript and PHP.
+
+## Using it with Webpack
+
+If you want to use this package client side with webpack, have a look at this article:
+
+[Sharing templates between PHP and JavaScript in Laravel](https://medium.com/@greut/sharing-templates-between-php-and-javascript-in-laravel-a5e07b43be24)
 
 ## Support
 
