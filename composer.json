@@ -17,10 +17,11 @@
     "require": {
         "php": ">=5.4.0",
         "illuminate/view": "5.*",
-        "zordius/lightncandy": "1.0.*"
+        "zordius/lightncandy": "1.1.*"
     },
     "require-dev": {
-        "orchestra/testbench": "~3.2"
+        "orchestra/testbench": "~3.2",
+        "phpunit/phpunit": "^6.0"
     },
     "autoload": {
         "psr-4": {
