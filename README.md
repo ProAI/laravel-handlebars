@@ -11,7 +11,7 @@ It's the perfect choice, if you want to use the same templates in different lang
 Laravel Handlebars is distributed as a composer package. So you first have to add the package to your `composer.json` file:
 
 ```
-"proai/laravel-handlebars": "~1.4"
+"proai/laravel-handlebars": "~1.5"
 ```
 
 Then you have to run `composer update` to install the package. Once this is completed, you have to add the service provider to the providers array in `config/app.php`:
