@@ -1,9 +1,9 @@
 <?php namespace ProAI\Handlebars\Engines;
 
-use Illuminate\View\Engines\EngineInterface;
+use Illuminate\Contracts\View\Engine;
 use Illuminate\View\Engines\CompilerEngine;
 
-class HandlebarsEngine extends CompilerEngine implements EngineInterface
+class HandlebarsEngine extends CompilerEngine implements Engine
 {
 
     /**
