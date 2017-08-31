@@ -16,7 +16,7 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "illuminate/view": "5.*",
+        "illuminate/view": "^5.5",
         "zordius/lightncandy": "1.1.*"
     },
     "require-dev": {
