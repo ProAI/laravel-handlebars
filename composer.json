@@ -17,7 +17,7 @@
     "require": {
         "php": ">=5.4.0",
         "illuminate/view": "^5.5",
-        "zordius/lightncandy": "1.1.*"
+        "zordius/lightncandy": "1.2.*"
     },
     "require-dev": {
         "orchestra/testbench": "~3.2",
