@@ -12,23 +12,23 @@ Laravel Handlebars is distributed as a composer package. So you first have to ad
 
 - For Laravel 5.5 and up:
 
-    ```
+    ```json
     "proai/laravel-handlebars": "^1.6"
     ```
 
 - For Laravel 5.1 to 5.4:
 
-    ```
+    ```json
     "proai/laravel-handlebars": "~1.5.0"
     ```
 
 Then you have to run `composer update` to install the package. Once this is completed, you have to add the service provider to the providers array in `config/app.php`:
 
-```
-        /*
-         * Package Service Providers...
-         */
-        ProAI\Handlebars\HandlebarsServiceProvider::class,
+```php
+/*
+ * Package Service Providers...
+ */
+ProAI\Handlebars\HandlebarsServiceProvider::class,
 ```
 
 You can publish the package configuration with the following command:
@@ -57,12 +57,12 @@ By default all views which have a `.hbs` or `.handlebars` file extension are aut
 
 If you wish, you can use the Blade language directives `@lang` and `@choice` in Handlebars templates, too. You have to set `$language_helpers = true` in order to use them. Here is an example:
 
-```
+```php
 // Blade syntax:
 @lang('message', ['firstname' => 'John', 'lastname' => $lastname])
 @choice('comment_count', 2, ['item' => 'Article'])
 ```
-```
+```handlebars
 // Handlebars syntax:
 {{lang 'message' firstname='John' lastname=lastname }}
 {{choice 'comment_count' 2 item='Article' }}
@@ -74,12 +74,12 @@ _This feature is currently broken. If you want to use it, use v1.1 or below or [
 
 If you want to output the raw code of a template (maybe because you want to use the unrendered template clientside), you can set `$optional_raw_output = true` in the configuration. Then you can pass a variable `$raw = true` to the template or more comfortable you can use the `@raw` Blade directive.
 
-```
+```php
 // Passing the $raw variable to the view:
 View::make('articles', ['raw' => true])
 @include('articles', ['raw' => true])
 ```
-```
+```php
 // Blade @raw directive:
 @raw('articles')
 ```
@@ -92,7 +92,7 @@ This package automatically adds the directory of the current template to the bas
 
 ### Example Template
 
-```
+```handlebars
 {{#each array_variable }}
 	{{#if this }}
 		{{ output_some_variable }} {{> include_templatename }}
