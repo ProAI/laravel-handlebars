@@ -13,13 +13,13 @@ Laravel Handlebars is distributed as a composer package. So you first have to ad
 - For Laravel 5.5 and up:
 
     ```
-    "proai/laravel-handlebars": "~1.6"
+    "proai/laravel-handlebars": "^1.6"
     ```
 
 - For Laravel 5.1 to 5.4:
 
     ```
-    "proai/laravel-handlebars": "1.5.*"
+    "proai/laravel-handlebars": "~1.5.0"
     ```
 
 Then you have to run `composer update` to install the package. Once this is completed, you have to add the service provider to the providers array in `config/app.php`:
