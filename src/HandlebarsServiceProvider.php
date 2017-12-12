@@ -34,7 +34,7 @@ class HandlebarsServiceProvider extends ServiceProvider
 
         $this->mergeConfigFrom($configPath, 'handlebars');
 
-        $this->publishes([$configPath => config_path('handlebars.php')], 'config');
+        $this->publishes([$configPath => config_path('handlebars.php')], 'laravel-handlebars');
     }
 
     /**

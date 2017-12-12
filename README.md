@@ -25,13 +25,16 @@ Laravel Handlebars is distributed as a composer package. So you first have to ad
 Then you have to run `composer update` to install the package. Once this is completed, you have to add the service provider to the providers array in `config/app.php`:
 
 ```
-'ProAI\Handlebars\HandlebarsServiceProvider'
+        /*
+         * Package Service Providers...
+         */
+        ProAI\Handlebars\HandlebarsServiceProvider::class,
 ```
 
 You can publish the package configuration with the following command:
 
-```
-php artisan vendor:publish --provider="ProAI\Handlebars\HandlebarsServiceProvider"
+```console
+php artisan vendor:publish --tag=laravel-handlebars
 ```
 
 ## Usage
