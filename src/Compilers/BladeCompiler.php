@@ -1,5 +1,6 @@
 <?php namespace ProAI\Handlebars\Compilers;
 
+use Illuminate\Support\Str;
 use Illuminate\View\Compilers\BladeCompiler as BaseBladeCompiler;
 use Illuminate\View\Compilers\CompilerInterface;
 
@@ -14,7 +15,7 @@ class BladeCompiler extends BaseBladeCompiler implements CompilerInterface
      */
     protected function compileRaw($expression)
     {
-        if (starts_with($expression, '(')) {
+        if (Str::startsWith($expression, '(')) {
             $expression = substr($expression, 1, -1);
         }
 

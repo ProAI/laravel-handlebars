@@ -1,5 +1,6 @@
 <?php namespace ProAI\Handlebars\Compilers;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\View\Compilers\Compiler;
@@ -104,7 +105,7 @@ class HandlebarsCompiler extends Compiler implements CompilerInterface
         }
 
         // set raw option
-        array_set($options, 'compile_helpers_only', $raw);
+        Arr::set($options, 'compile_helpers_only', $raw);
 
         // set language helper functions
         if ($this->languageHelpers) {
@@ -116,7 +117,7 @@ class HandlebarsCompiler extends Compiler implements CompilerInterface
                 $helpers = [];
             }
 
-            array_set($options, 'helpers', $helpers);
+            Arr::set($options, 'helpers', $helpers);
         }
 
         // As of LightnCandy v0.91 resolving via `basedir` and `fileext` options has been stripped from LightnCandy.

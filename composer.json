@@ -15,13 +15,13 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0",
-        "illuminate/view": "^5.5",
+        "php": "^7.2",
+        "illuminate/view": "^6.0",
         "zordius/lightncandy": "1.2.*"
     },
     "require-dev": {
-        "orchestra/testbench": "~3.2",
-        "phpunit/phpunit": "^6.0"
+        "orchestra/testbench": "^4.0",
+        "phpunit/phpunit": "^8.0"
     },
     "autoload": {
         "psr-4": {
