@@ -10,10 +10,22 @@ It's the perfect choice, if you want to use the same templates in different lang
 
 Laravel Handlebars is distributed as a composer package. So you first have to add the package to your `composer.json` file:
 
-- For Laravel 5.5 and up:
+- For Laravel 7.x and up:
 
     ```json
-    "proai/laravel-handlebars": "^1.6"
+    "proai/laravel-handlebars": "^1.10"
+    ```
+
+- For Laravel 6.x:
+
+    ```json
+    "proai/laravel-handlebars": "~1.9"
+    ```
+
+- For Laravel 5.5+:
+
+    ```json
+    "proai/laravel-handlebars": "~1.8"
     ```
 
 - For Laravel 5.1 to 5.4:
