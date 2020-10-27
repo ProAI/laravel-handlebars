@@ -1,6 +1,6 @@
 {
     "name": "proai/laravel-handlebars",
-    "description": "A Laravel 7 wrapper for LightnCandy for using the Handlebars (and Mustache) template engine.",
+    "description": "A Laravel wrapper for LightnCandy for using the Handlebars (and Mustache) template engine.",
     "keywords": ["laravel","lightncandy","handlebars","mustache","template engine"],
     "homepage": "http://github.com/proai/laravel-handlebars",
     "license": "MIT",
