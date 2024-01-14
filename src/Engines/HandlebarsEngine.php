@@ -28,7 +28,7 @@ class HandlebarsEngine extends CompilerEngine implements Engine
         $compiled = $this->compiler->getCompiledPath($path, $raw);
 
         // convert objects to arrays
-        $data = array_map('self::convertObjectToArray', $data);
+        $data = array_map([$this, 'convertObjectToArray'], $data);
 
         // Once we have the path to the compiled file, we will evaluate the paths with
         // typical PHP just like any other templates. We also keep a stack of views
