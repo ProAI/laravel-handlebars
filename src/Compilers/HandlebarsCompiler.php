@@ -26,6 +26,9 @@ class HandlebarsCompiler extends Compiler implements CompilerInterface
     /** @var bool */
     protected $translateRawOutput = true;
 
+    /** @var array */
+    protected $options;
+
     /**
      * Create a new compiler instance.
      *
